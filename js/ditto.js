@@ -426,31 +426,59 @@ $(window).on('resize', function() {
 function init_sidebar_features() {
     // 侧边栏切换功能
     $('#sidebar-toggle').on('click', function() {
-        $('#sidebar').toggleClass('hidden');
-        $('#content').toggleClass('sidebar-hidden');
-        
-        // 更新翻页按钮位置
-        if ($('#content').hasClass('sidebar-hidden')) {
-            $('#flip').css('left', '50%');
-            $('#sidebar-resizer').hide();  // 隐藏拖拽条
-        } else {
-            if (window.innerWidth >= 640) {  // 40rem = 640px
-                $('#flip').css('left', 'calc(50% + 165px)');
-                $('#sidebar-resizer').show();  // 显示拖拽条
+        var $sidebar = $('#sidebar');
+        var $overlay = $('#sidebar-overlay');
+        var isMobile = window.innerWidth < 640;
+
+        if (isMobile) {
+            // 移动端逻辑
+            if ($sidebar.hasClass('visible')) {
+                $sidebar.removeClass('visible');
+                $overlay.removeClass('visible');
+                setTimeout(function() {
+                    $overlay.hide();
+                }, 300); // 等待过渡动画完成
+            } else {
+                $overlay.show();
+                setTimeout(function() {
+                    $sidebar.addClass('visible');
+                    $overlay.addClass('visible');
+                }, 10); // 确保显示后再添加过渡效果
             }
+        } else {
+            // 桌面端逻辑
+            $('#sidebar').toggleClass('hidden');
+            $('#content').toggleClass('sidebar-hidden');
+            
+            // 更新翻页按钮位置
+            if ($('#content').hasClass('sidebar-hidden')) {
+                $('#flip').css('left', '50%');
+            } else {
+                if (window.innerWidth >= 640) {
+                    $('#flip').css('left', 'calc(50% + 165px)');
+                }
+            }
+            
+            // 保存状态到 localStorage
+            var isHidden = $('#sidebar').hasClass('hidden');
+            localStorage.setItem('sidebar-hidden', isHidden);
         }
-        
-        // 保存状态到 localStorage
-        var isHidden = $('#sidebar').hasClass('hidden');
-        localStorage.setItem('sidebar-hidden', isHidden);
     });
 
-    // 从 localStorage 恢复状态
-    if (localStorage.getItem('sidebar-hidden') === 'true') {
+    // 点击遮罩层关闭侧边栏
+    $('#sidebar-overlay').on('click', function() {
+        $('#sidebar').removeClass('visible');
+        $(this).removeClass('visible');
+        setTimeout(function() {
+            $('#sidebar-overlay').hide();
+        }, 300);
+    });
+
+    // 从 localStorage 恢复状态（仅桌面端）
+    if (window.innerWidth >= 640 && localStorage.getItem('sidebar-hidden') === 'true') {
         $('#sidebar').addClass('hidden');
         $('#content').addClass('sidebar-hidden');
         $('#flip').css('left', '50%');
-        $('#sidebar-resizer').hide();  // 初始化时如果侧边栏是隐藏的，也隐藏拖拽条
     }
 
     // 侧边栏宽度调整功能
