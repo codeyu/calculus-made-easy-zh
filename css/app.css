@@ -26,30 +26,31 @@ body {
     font-size: 0.8rem;
 }
 
+/* 移动设备上默认隐藏侧边栏 */
 #sidebar {
-    margin-top: 0;
-    padding-left: 25px;
-	padding-bottom:25px;
-    padding-top: 25px;
-
-    box-shadow: 0 0 40px #CCC;
-    -webkit-box-shadow: 0 0 40px #CCC;
-    -moz-box-shadow: 0 0 40px #CCC;
-    border-right: 1px solid #BBB;
-    transition: transform 0.3s ease;
+    display: none;
 }
 
+/* 桌面设备上显示侧边栏 */
 @media (min-width: 40rem) {
-	#sidebar {
-	width: 280px;
-    position: fixed;
-    height: 100%;
-    margin-right: 20px;
-	padding-bottom:0px;
-    padding-top: 0px;
-    overflow-y: scroll;
-    overflow: -moz-scrollbars-vertical;
-	}
+    #sidebar {
+        display: block;
+        margin-top: 0;
+        padding-left: 25px;
+        padding-bottom: 0px;
+        padding-top: 0px;
+        width: 280px;
+        position: fixed;
+        height: 100%;
+        margin-right: 20px;
+        overflow-y: scroll;
+        overflow: -moz-scrollbars-vertical;
+        box-shadow: 0 0 40px #CCC;
+        -webkit-box-shadow: 0 0 40px #CCC;
+        -moz-box-shadow: 0 0 40px #CCC;
+        border-right: 1px solid #BBB;
+        transition: transform 0.3s ease;
+    }
 
     #sidebar.hidden {
         transform: translateX(-100%);
@@ -134,28 +135,65 @@ input.searchButton {
   height: 18px;
 }
 
+/* 移动设备样式 */
 #content {
-    padding-top: 10px;
-    padding-bottom: 150px;
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-left: auto;
-    margin-right: auto;
+    padding: 10px 20px 150px 20px;
+    margin: 0 auto;
     font-size: 0.8rem;
     line-height: 1.3rem;
-    max-width: 800px;
     color: #666;
     counter-reset: section;
     position: relative;
+    width: auto;  /* 改为 auto */
+    max-width: 100%;  /* 移动设备上允许全宽 */
 }
 
+/* 桌面设备样式 (>= 640px) */
 @media (min-width: 40rem) {
     #content {
-        margin-left: auto;
-        margin-right: auto;
         padding-left: 350px;
         width: calc(100% - 350px);
         max-width: 800px;
+    }
+
+    #content.sidebar-hidden {
+        padding-left: 40px;
+        padding-right: 40px;
+        width: auto;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    /* 显示侧边栏相关元素 */
+    #sidebar {
+        display: block;
+        margin-top: 0;
+        padding-left: 25px;
+        padding-bottom: 0px;
+        padding-top: 0px;
+        width: 280px;
+        position: fixed;
+        height: 100%;
+        margin-right: 20px;
+        overflow-y: scroll;
+        overflow: -moz-scrollbars-vertical;
+        box-shadow: 0 0 40px #CCC;
+        -webkit-box-shadow: 0 0 40px #CCC;
+        -moz-box-shadow: 0 0 40px #CCC;
+        border-right: 1px solid #BBB;
+        transition: transform 0.3s ease;
+    }
+
+    #sidebar.hidden {
+        transform: translateX(-100%);
+    }
+
+    #sidebar-toggle {
+        display: block;
+    }
+
+    #sidebar-resizer {
+        display: block;
     }
 }
 
@@ -293,16 +331,27 @@ input.searchButton {
 
 #content u {color: #C35555;}
 
+/* 翻页按钮样式 */
 #flip {
     position: fixed;
     height: 20px;
-    width: 100%;
+    width: 150px;
     bottom: 10px;
-    font-size: 10px;
-    text-align: center;
     left: 50%;
     transform: translateX(-50%);
-    max-width: 150px;
+    font-size: 10px;
+    text-align: center;
+    z-index: 1000;
+}
+
+@media (min-width: 40rem) {
+    #flip {
+        left: calc(50% + 165px);
+    }
+
+    #content.sidebar-hidden ~ #flip {
+        left: 50%;
+    }
 }
 
 #pageup, #pagedown {
@@ -327,15 +376,6 @@ input.searchButton {
 #pageup:hover, #pagedown:hover {
     background-color: #444;
     cursor: pointer;
-}
-
-@media (min-width: 40rem) {
-    #flip {
-        left: calc(50% + 165px);  /* 考虑左侧边栏的宽度，545px - 150px/2 ≈ 165px */
-        transform: translateX(-50%);
-        width: 150px;
-        margin-left: 0;  /* 清除原来的margin-left */
-    }
 }
 
 #back_to_top {

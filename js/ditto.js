@@ -429,6 +429,17 @@ function init_sidebar_features() {
         $('#sidebar').toggleClass('hidden');
         $('#content').toggleClass('sidebar-hidden');
         
+        // 更新翻页按钮位置
+        if ($('#content').hasClass('sidebar-hidden')) {
+            $('#flip').css('left', '50%');
+            $('#sidebar-resizer').hide();  // 隐藏拖拽条
+        } else {
+            if (window.innerWidth >= 640) {  // 40rem = 640px
+                $('#flip').css('left', 'calc(50% + 165px)');
+                $('#sidebar-resizer').show();  // 显示拖拽条
+            }
+        }
+        
         // 保存状态到 localStorage
         var isHidden = $('#sidebar').hasClass('hidden');
         localStorage.setItem('sidebar-hidden', isHidden);
@@ -438,6 +449,8 @@ function init_sidebar_features() {
     if (localStorage.getItem('sidebar-hidden') === 'true') {
         $('#sidebar').addClass('hidden');
         $('#content').addClass('sidebar-hidden');
+        $('#flip').css('left', '50%');
+        $('#sidebar-resizer').hide();  // 初始化时如果侧边栏是隐藏的，也隐藏拖拽条
     }
 
     // 侧边栏宽度调整功能
@@ -471,6 +484,12 @@ function init_sidebar_features() {
         $sidebar.width(newWidth);
         $resizer.css('left', newWidth + 'px');
         $content.css('padding-left', (newWidth + 70) + 'px');
+
+        // 更新翻页按钮位置
+        if (window.innerWidth >= 640) {  // 40rem = 640px
+            var offset = Math.floor((newWidth - 280) / 2);  // 计算偏移量
+            $('#flip').css('left', 'calc(50% + ' + (165 + offset) + 'px)');
+        }
     });
 
     $(document).on('mouseup', function(e) {
@@ -481,5 +500,11 @@ function init_sidebar_features() {
         
         // 保存宽度到 localStorage
         localStorage.setItem('sidebar-width', originalWidth);
+
+        // 保存最终的翻页按钮位置
+        if (window.innerWidth >= 640) {  // 40rem = 640px
+            var offset = Math.floor((originalWidth - 280) / 2);  // 计算偏移量
+            $('#flip').css('left', 'calc(50% + ' + (165 + offset) + 'px)');
+        }
     });
 }
