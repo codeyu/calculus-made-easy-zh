@@ -345,6 +345,17 @@ function router() {
       Prism.highlightElement(this);
     });
 
+    // 渲染数学公式
+    renderMathInElement(document.getElementById('content'), {
+        delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+        ],
+        throwOnError: false
+    });
+
     var perc = ditto.save_progress ? store.get('page-progress') || 0 : 0;
 
     if (sectionId) {
