@@ -295,6 +295,9 @@ input.searchButton {
     bottom: 10px;
     font-size: 10px;
     text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 150px;
 }
 
 #pageup, #pagedown {
@@ -323,8 +326,10 @@ input.searchButton {
 
 @media (min-width: 40rem) {
     #flip {
-        margin-left: 545px;
+        left: calc(50% + 165px);  /* 考虑左侧边栏的宽度，545px - 150px/2 ≈ 165px */
+        transform: translateX(-50%);
         width: 150px;
+        margin-left: 0;  /* 清除原来的margin-left */
     }
 }
 
