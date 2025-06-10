@@ -697,26 +697,6 @@ ol {
     color: #333;
 }
 
-/* 侧边栏切换按钮 */
-#sidebar-toggle {
-    display: none;
-    position: fixed;
-    top: 6px;
-    left: 6px;
-    font-size: 8px;  /* 减小字体大小 */
-    cursor: pointer;
-    z-index: 1001;
-    background-color: #AAA;  /* 改为灰色背景 */
-    color: #FFF;
-    padding: 3px 8px;  /* 减小内边距 */
-    border-radius: 3px;
-    transition: background-color 0.3s ease;  /* 添加过渡效果 */
-}
-
-#sidebar-toggle:hover {
-    background-color: #444;  /* 悬停时变深灰色 */
-}
-
 /* 侧边栏调整宽度的把手 */
 #sidebar-resizer {
     display: none;
