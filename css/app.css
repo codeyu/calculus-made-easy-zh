@@ -36,6 +36,7 @@ body {
     -webkit-box-shadow: 0 0 40px #CCC;
     -moz-box-shadow: 0 0 40px #CCC;
     border-right: 1px solid #BBB;
+    transition: transform 0.3s ease;
 }
 
 @media (min-width: 40rem) {
@@ -49,6 +50,10 @@ body {
     overflow-y: scroll;
     overflow: -moz-scrollbars-vertical;
 	}
+
+    #sidebar.hidden {
+        transform: translateX(-100%);
+    }
 }
 
 #sidebar h1 {
@@ -557,4 +562,84 @@ ol {
 #content h5,
 #content h6 {
     color: #333;
+}
+
+/* 侧边栏切换按钮 */
+#sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-size: 16px;  /* 减小字体大小 */
+    cursor: pointer;
+    z-index: 1001;
+    background-color: #AAA;  /* 改为灰色背景 */
+    color: #FFF;
+    padding: 3px 8px;  /* 减小内边距 */
+    border-radius: 3px;
+    transition: background-color 0.3s ease;  /* 添加过渡效果 */
+}
+
+#sidebar-toggle:hover {
+    background-color: #444;  /* 悬停时变深灰色 */
+}
+
+/* 侧边栏调整宽度的把手 */
+#sidebar-resizer {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 280px;  /* 与侧边栏宽度相同 */
+    width: 5px;
+    background: transparent;
+    cursor: col-resize;
+    z-index: 1000;
+}
+
+#sidebar-resizer:hover {
+    background: rgba(70, 130, 190, 0.3);
+}
+
+/* 修改侧边栏样式 */
+#sidebar {
+    margin-top: 0;
+    padding-left: 25px;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    box-shadow: 0 0 40px #CCC;
+    -webkit-box-shadow: 0 0 40px #CCC;
+    -moz-box-shadow: 0 0 40px #CCC;
+    border-right: 1px solid #BBB;
+    transition: transform 0.3s ease;
+}
+
+@media (min-width: 40rem) {
+    #sidebar {
+        width: 280px;
+        position: fixed;
+        height: 100%;
+        margin-right: 20px;
+        padding-bottom: 0px;
+        padding-top: 0px;
+        overflow-y: scroll;
+        overflow: -moz-scrollbars-vertical;
+    }
+
+    #sidebar.hidden {
+        transform: translateX(-100%);
+    }
+
+    #sidebar-toggle {
+        display: block;
+    }
+
+    #sidebar-resizer {
+        display: block;
+    }
+
+    /* 当侧边栏隐藏时，调整内容区域 */
+    #content.sidebar-hidden {
+        padding-left: 40px !important;
+    }
 }

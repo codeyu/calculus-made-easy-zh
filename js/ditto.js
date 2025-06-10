@@ -48,6 +48,7 @@ function initialize() {
   // initialize sidebar and buttons
   if (ditto.sidebar) {
     init_sidebar_section();
+    init_sidebar_features();  // 添加新的侧边栏功能
   }
 
   if (ditto.back_to_top_button) {
@@ -65,14 +66,14 @@ function initialize() {
 
 function init_sidebar_section() {
     $.get(ditto.sidebar_file, function (data) {
-        $(ditto.sidebar_id).html(marked(data));
+        $('#sidebar .sidebar-content').html(marked(data));
 
         if (ditto.search_bar) {
            init_searchbar();
         }
 
         // 初始化内容数组
-        var menuOL = $(ditto.sidebar_id + ' ol');
+        var menuOL = $('#sidebar .sidebar-content ol');
         menuOL.attr('start', 0);
 
         menuOL.find('li a').map(function() {
@@ -420,3 +421,65 @@ $(window).on('resize', function() {
     $(ditto.edit_id).hide();
   }
 });
+
+// 添加新的侧边栏功能初始化函数
+function init_sidebar_features() {
+    // 侧边栏切换功能
+    $('#sidebar-toggle').on('click', function() {
+        $('#sidebar').toggleClass('hidden');
+        $('#content').toggleClass('sidebar-hidden');
+        
+        // 保存状态到 localStorage
+        var isHidden = $('#sidebar').hasClass('hidden');
+        localStorage.setItem('sidebar-hidden', isHidden);
+    });
+
+    // 从 localStorage 恢复状态
+    if (localStorage.getItem('sidebar-hidden') === 'true') {
+        $('#sidebar').addClass('hidden');
+        $('#content').addClass('sidebar-hidden');
+    }
+
+    // 侧边栏宽度调整功能
+    var $sidebar = $('#sidebar');
+    var $resizer = $('#sidebar-resizer');
+    var $content = $('#content');
+    var isResizing = false;
+    var lastDownX = 0;
+    var originalWidth = parseInt(localStorage.getItem('sidebar-width')) || 280;
+    
+    // 恢复保存的宽度
+    if (originalWidth !== 280) {
+        $sidebar.width(originalWidth);
+        $resizer.css('left', originalWidth + 'px');
+        $content.css('padding-left', (originalWidth + 70) + 'px');
+    }
+
+    $resizer.on('mousedown', function(e) {
+        isResizing = true;
+        lastDownX = e.clientX;
+        e.preventDefault();
+    });
+
+    $(document).on('mousemove', function(e) {
+        if (!isResizing) return;
+
+        var newWidth = originalWidth + (e.clientX - lastDownX);
+        if (newWidth < 150) newWidth = 150;  // 最小宽度
+        if (newWidth > 600) newWidth = 600;  // 最大宽度
+
+        $sidebar.width(newWidth);
+        $resizer.css('left', newWidth + 'px');
+        $content.css('padding-left', (newWidth + 70) + 'px');
+    });
+
+    $(document).on('mouseup', function(e) {
+        if (!isResizing) return;
+        
+        isResizing = false;
+        originalWidth = $sidebar.width();
+        
+        // 保存宽度到 localStorage
+        localStorage.setItem('sidebar-width', originalWidth);
+    });
+}
