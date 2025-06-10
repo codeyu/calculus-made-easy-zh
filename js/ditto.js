@@ -132,8 +132,11 @@ function searchbar_listener(event) {
 
 
 function init_back_to_top_button() {
-  $(ditto.back_to_top_id).show();
-  $(ditto.back_to_top_id).on('click', goTop);
+  // 只在非移动端显示
+  if (window.innerWidth >= 640) {  // 40rem = 640px
+    $(ditto.back_to_top_id).show();
+    $(ditto.back_to_top_id).on('click', goTop);
+  }
 }
 
 function goTop(e) {
@@ -154,20 +157,21 @@ function init_edit_button() {
   if (ditto.base_url === null) {
     alert("Error! You didn't set 'base_url' when calling ditto.run()!");
   } else {
-    $(ditto.edit_id).show();
-    $(ditto.edit_id).on("click", function() {
-      var hash = location.hash.replace("#", "/");
-      if (/#.*$/.test(hash)) {
-        hash = hash.replace(/#.*$/, '');
-      }
-      if (hash === "") {
-        hash = "/" + ditto.index.replace(".md", "");
-      }
+    // 只在非移动端显示
+    if (window.innerWidth >= 640) {  // 40rem = 640px
+      $(ditto.edit_id).show();
+      $(ditto.edit_id).on("click", function() {
+        var hash = location.hash.replace("#", "/");
+        if (/#.*$/.test(hash)) {
+          hash = hash.replace(/#.*$/, '');
+        }
+        if (hash === "") {
+          hash = "/" + ditto.index.replace(".md", "");
+        }
 
-      window.open(ditto.base_url + hash + ".md");
-      // open is better than redirecting, as the previous page history
-      // with redirect is a bit messed up
-    });
+        window.open(ditto.base_url + hash + ".md");
+      });
+    }
   }
 }
 
@@ -401,3 +405,18 @@ function router() {
     $(ditto.loading_id).hide();
   });
 }
+
+// 添加窗口大小变化的监听
+$(window).on('resize', function() {
+  if (window.innerWidth >= 640) {
+    if (ditto.back_to_top_button) {
+      $(ditto.back_to_top_id).show();
+    }
+    if (ditto.edit_button) {
+      $(ditto.edit_id).show();
+    }
+  } else {
+    $(ditto.back_to_top_id).hide();
+    $(ditto.edit_id).hide();
+  }
+});

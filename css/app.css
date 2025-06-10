@@ -334,51 +334,50 @@ input.searchButton {
 }
 
 #back_to_top {
-    display: none;
-    position: fixed;
-    height: 20px;
-    width: 70px;
-    bottom: 50px;
-    right: 20px;
-    color: #FFF;
-    line-height: 20px;
-    text-align: center;
-    font-size: 10px;
-    border-radius: 5px;
-    background-color: #AAA;
-    cursor: pointer;
+    display: none;  /* 默认不显示 */
 }
 
 #edit {
-    display: none;
-    position: fixed;
-    height: 17px;
-    width: 70px;
-    bottom: 20px;
-    right: 20px;
-    color: #FFF;
-    line-height: 17px;
-    text-align: center;
-    font-size: 10px;
-    border-radius: 5px;
-    background-color: #AAA;
-    cursor: pointer;
+    display: none;  /* 默认不显示 */
 }
 
+/* 只在大屏幕显示按钮 */
 @media (min-width: 40rem) {
     #back_to_top {
-        margin-left: 0;
-        margin-top: 0;
+        display: none;  /* 仍然由 JS 控制显示 */
+        position: fixed;
+        height: 20px;
+        width: 70px;
+        bottom: 50px;
+        right: 20px;
+        color: #FFF;
+        line-height: 20px;
+        text-align: center;
+        font-size: 10px;
+        border-radius: 5px;
+        background-color: #AAA;
+        cursor: pointer;
     }
     
     #edit {
-        margin-left: 0;
-        margin-top: 0;
+        display: none;  /* 仍然由 JS 控制显示 */
+        position: fixed;
+        height: 17px;
+        width: 70px;
+        bottom: 20px;
+        right: 20px;
+        color: #FFF;
+        line-height: 17px;
+        text-align: center;
+        font-size: 10px;
+        border-radius: 5px;
+        background-color: #AAA;
+        cursor: pointer;
     }
-}
 
-#back_to_top:hover, #edit:hover {
-    background-color: #444;
+    #back_to_top:hover, #edit:hover {
+        background-color: #444;
+    }
 }
 
 #loading, #error {
