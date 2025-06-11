@@ -804,6 +804,12 @@ ol {
     text-shadow: none !important;  /* 移除文字阴影 */
 }
 
+/* 加深上划线的颜色 */
+.katex .overline .overline-line {
+    border-top-color: #2a2a2a !important;  /* 使用与文本相同的深色 */
+    border-top-width: 0.06em !important;   /* 稍微加粗线条 */
+}
+
 /* 确保公式中的所有元素都清晰可见 */
 .katex .mord,
 .katex .mbin,
