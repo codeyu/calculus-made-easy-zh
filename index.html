@@ -6,7 +6,9 @@
   <link rel="stylesheet" href="app/bower_components/normalize-css/normalize.css">
   <link rel="stylesheet" href="css/app.css">
   <!-- KaTeX CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+  <link rel="stylesheet" href="js/katex/katex.min.css">
+
+  
   <title>微积分原来这么简单</title>
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -14,9 +16,11 @@
   <script src="js/jquery-ui.min.js"></script>
   <script src="js/marked.js"></script>
   <script src="js/store.js"></script>
-  <!-- KaTeX JS -->
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XxSdg7YiIKfxraPJuXVRDx2L1ghgqRhr9IHD+Qh3wYJZz126ZfgqPoJFDI4brjKr" crossorigin="anonymous"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+  <!-- The loading of KaTeX is deferred to speed up page rendering -->
+  <script src="js/katex/katex.min.js"></script>
+
+  <!-- To automatically render math in text elements, include the auto-render extension: -->
+  <script src="js/katex/contrib/auto-render.min.js"></script>
   <script src="js/ditto.js?v=0.2"></script>
   <script src="js/prism.js"></script>
 </head>
