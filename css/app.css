@@ -756,3 +756,36 @@ ol {
         padding-left: 40px !important;
     }
 }
+
+/* 保护数学公式渲染 */
+.katex {
+    font-size: 1em !important;
+}
+
+.katex-display {
+    display: block !important;
+    margin: 1em 0 !important;
+    text-align: center !important;
+}
+
+/* 确保数学公式内部元素不受外部样式影响 */
+.katex * {
+    border: none !important;
+    background: none !important;
+    padding: 0 !important;
+    letter-spacing: normal !important;
+}
+
+/* 保护行内公式 */
+.katex-inline {
+    display: inline-block !important;
+    margin: 0 0.2em !important;
+    vertical-align: middle !important;
+}
+
+/* 保护数学符号不受字体样式影响 */
+.katex .math {
+    font-style: normal !important;
+    font-weight: normal !important;
+    line-height: normal !important;
+}

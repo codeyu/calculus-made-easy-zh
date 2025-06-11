@@ -225,16 +225,38 @@ function create_page_anchors() {
       headers.push(content);
       $(this).addClass(replace_symbols(content));
       this.id = replace_symbols(content);
+      
+      // 存储原始HTML，包括已渲染的数学公式
+      var originalHtml = $(this).html();
+      
       $(this).hover(function () {
-        $(this).html(content +
+        // 在原始HTML后添加链接，而不是替换整个内容
+        $(this).html(originalHtml +
           ' <a href="#' + location.hash.split('#')[1] +
           '#' +
           replace_symbols(content) +
           '" class="section-link">§</a> <a href="#' +
           location.hash.split('#')[1] + '" onclick="goTop()">⇧</a>');
       }, function () {
-        $(this).html(content);
+        // 恢复原始HTML，保持数学公式的渲染状态
+        $(this).html(originalHtml);
       });
+
+      // 确保hover事件不会破坏数学公式渲染
+      $(this).on('mouseenter mouseleave', function() {
+        renderMathInElement(this, {
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError: false,
+          output: 'html',
+          strict: false
+        });
+      });
+      
       $(this).on('click', 'a.section-link', function(event) {
         event.preventDefault();
         history.pushState(null, null, '#' + location.hash.split('#')[1] + '#' + replace_symbols(content));
@@ -356,7 +378,14 @@ function router() {
           ],
           throwOnError: false,
           output: 'html',  // 使用html输出以避免与其他渲染冲突
-          strict: false    // 放宽严格模式以提高兼容性
+          strict: false,    // 放宽严格模式以提高兼容性
+          trust: true,
+          macros: {},
+          minRuleThickness: 0.05,
+          maxSize: Infinity,
+          maxExpand: 1000,
+          globalGroup: true,  // 启用全局分组以避免样式冲突
+          displayMode: false  // 默认使用行内模式，让 delimiters 控制显示模式
       });
     }, 100);
 
