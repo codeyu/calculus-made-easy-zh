@@ -345,6 +345,21 @@ function router() {
       Prism.highlightElement(this);
     });
 
+    // 渲染数学公式 - 添加小延时确保在其他DOM操作后执行
+    setTimeout(function() {
+      renderMathInElement(document.getElementById('content'), {
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          throwOnError: false,
+          output: 'html',  // 使用html输出以避免与其他渲染冲突
+          strict: false    // 放宽严格模式以提高兼容性
+      });
+    }, 100);
+
     var perc = ditto.save_progress ? store.get('page-progress') || 0 : 0;
 
     if (sectionId) {
