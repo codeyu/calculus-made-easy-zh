@@ -12,7 +12,7 @@
 1. [第三章 关于相对增长](#docs/on-relative-growings)
 1. [第四章 最简单的情况](#docs/simplest-cases)
 1. [第五章 下一阶段：如何处理常数](#docs/next-stage-what-to-do-with-constants)
-1. [第六章 和、差、积、商](#docs/sums,-differences-products-and-quotients)
+1. [第六章 和、差、积、商](#docs/sums-differences-products-and-quotients)
 1. [第七章 逐次求导](#docs/successive-differentiation)
 1. [第八章 当时间变化时](#docs/when-time-varies)
 1. [第九章 引入一个有用的技巧](#docs/introducing-a-useful-dodge)
